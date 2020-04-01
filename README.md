@@ -11,7 +11,7 @@ Adding the dependency net.bull.javamelody:javamelody-spring-boot-starter to the 
 	<artifactId>javamelody-spring-boot-starter</artifactId>
 	<version>1.82.0</version>
 </dependency>
-
+```
 Adding custom configuration for JavaMelody to the application.yml or application.properties. See src/main/resources/application.yml.
 
 
@@ -19,12 +19,11 @@ Spring beans having an annotation @Controller, @RestController, @Service, @Async
 Configuration
 
 If you want, you can configure other settings by using configuration properties prefixed with javamelody in your application.yml or application.properties.
-authentication parameters shoul added in following "javamelody.init-parameters.authorized-users"
+authentication parameters shoul added in following javamelody.init-parameters.authorized-users
 
 
 
 ```xml
-
 Example for application.properties:
 javamelody.enabled=true
 javamelody.excluded-datasources=secretSource,topSecretSource
@@ -33,13 +32,15 @@ javamelody.init-parameters.log=true
 javamelody.init-parameters.url-exclude-pattern=(/webjars/.*|/css/.*|/images/.*|/fonts/.*|/js/.*)
 javamelody.init-parameters.authorized-users=ADMIN77fae508:77fae508-1d23-4864-8aae-dfa4bd060fec;ADMINb6683814:b6683814-74c0-46e9-8dc2-6f976cb3c2ce
 javamelody.init-parameters.monitoring-path=monitoring
+```
+
+
+# Security
 
 Then you can run your spring-boot application and open http://localhost:8080/monitoring to browse the monitoring reports.
 by entering following credentials 
 username : ADMIN77fae508
 password :77fae508-1d23-4864-8aae-dfa4bd060fec
-
-# Security
 
 To secure the access to the /monitoring URL, you may want to use the parameters allowed-addr-pattern to restrict access using a regexp for IP address or authorized-users for http basic auth as shown above in Configuration.
 
@@ -52,9 +53,10 @@ add the starter dependency in pom.xml:
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-security</artifactId>
 	</dependency>
+```
 
-
-   configure Spring security with .antMatchers("/monitoring").hasRole("ADMIN") (and http basic auth and in memory user's storage for example):
+   
+## Java Configuration
 
 
 ```java
@@ -77,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new InMemoryUserDetailsManager(user, admin);
   }
 }
-
+```
 
 ## Configuration in case of management port(Since 1.76)
 
@@ -91,17 +93,13 @@ if not already done, configure the actuator and the management http port, in pom
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-actuator</artifactId>
 </dependency>
+```
 
-
-```java
 and in application.yml (or in application.properties), for example on 8081:
 
 management.server.port: 8081
-
-    Enable the "monitoring" management endpoint and expose it over http, in application.yml (or in application.properties) :
-
+Enable the "monitoring" management endpoint and expose it over http, in application.yml (or in application.properties) :
 management.endpoints.web.exposure.include: info,health,monitoring
-
 javamelody:
   management-endpoint-monitoring-enabled: true
 
@@ -110,9 +108,7 @@ javamelody:
     http://localhost:8081/actuator/monitoring is now available
 
     Secure the access to the monitoring endpoint: See doc or use the authorized-users or allowed-addr-pattern javamelody init-parameters in application.yml/application.properties.
-
 Or integration without the Spring Boot Starter
-
     Add javamelody-core dependency in your pom.xml.
     Then, copy this example of JavaMelodyConfiguration class in your application.
     If your application has auto-proxy issues, such as The bean could not be injected as ..., comment the defaultAdvisorAutoProxyCreator() method in your JavaMelodyConfiguration class and add the following dependency in your pom.xml:
@@ -123,7 +119,7 @@ Or integration without the Spring Boot Starter
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-aop</artifactId>
 </dependency>
-
+```
 
 ## Reference Documentation
 For further reference, please consider the following sections:
