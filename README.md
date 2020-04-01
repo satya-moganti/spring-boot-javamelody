@@ -24,10 +24,11 @@ Configuration
 If you want, you can configure other settings by using configuration properties prefixed with javamelody in your application.yml or application.properties.
 authentication parameters shoul added in following "javamelody.init-parameters.authorized-users"
 
-Example for application.properties:
- [source,java]
+
+[source,java]
 ----
 /*
+Example for application.properties:
 javamelody.enabled=true
 javamelody.excluded-datasources=secretSource,topSecretSource
 javamelody.spring-monitoring-enabled=true
@@ -35,7 +36,6 @@ javamelody.init-parameters.log=true
 javamelody.init-parameters.url-exclude-pattern=(/webjars/.*|/css/.*|/images/.*|/fonts/.*|/js/.*)
 javamelody.init-parameters.authorized-users=ADMIN77fae508:77fae508-1d23-4864-8aae-dfa4bd060fec;ADMINb6683814:b6683814-74c0-46e9-8dc2-6f976cb3c2ce
 javamelody.init-parameters.monitoring-path=monitoring
-
 */
 ----
 
@@ -44,26 +44,24 @@ by entering following credentials
 username : ADMIN77fae508
 password :77fae508-1d23-4864-8aae-dfa4bd060fec
 
- == Security
+=== Security
 
 To secure the access to the /monitoring URL, you may want to use the parameters allowed-addr-pattern to restrict access using a regexp for IP address or authorized-users for http basic auth as shown above in Configuration.
 
 Or you may want to use Spring security. For that:
 add the starter dependency in pom.xml:
 
- [source,xml]
+[source,xml]
 ----
-
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-security</artifactId>
 	</dependency>
-
 ----
 
    configure Spring security with .antMatchers("/monitoring").hasRole("ADMIN") (and http basic auth and in memory user's storage for example):
 
- [source,java]
+[source,java]
 ----
 @Configuration
 @EnableWebSecurity
@@ -85,15 +83,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 }
 ----
 
-#Configuration in case of management port
-
-(Since 1.76)
+Configuration in case of management port(Since 1.76)
 
 Perhaps you already use a management http port (e.g. 8081) different from the application http port (8080). In that case, you may want to use the management port also to display the monitoring reports, instead of using the default application http port to display the reports. For that:
 
-    If not already done, configure the actuator and the management http port, in pom.xml:
+if not already done, configure the actuator and the management http port, in pom.xml:
 	
- [source,xml]
+[source,xml]
 ----
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -102,7 +98,7 @@ Perhaps you already use a management http port (e.g. 8081) different from the ap
 ----
 
 
- [source,java]
+[source,java]
 ----
 and in application.yml (or in application.properties), for example on 8081:
 
@@ -114,7 +110,6 @@ management.endpoints.web.exposure.include: info,health,monitoring
 
 javamelody:
   management-endpoint-monitoring-enabled: true
-
 ----
 
     http://localhost:8080/monitoring is now forbidden access
@@ -134,10 +129,9 @@ Or integration without the Spring Boot Starter
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-aop</artifactId>
 </dependency>
-
 ----
 
-### Reference Documentation
+=== Reference Documentation
 For further reference, please consider the following sections:
 * [Documentation of JavaMelody] (https://github.com/javamelody/javamelody/wiki/SpringBootStarter)
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
