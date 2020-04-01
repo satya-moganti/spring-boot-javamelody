@@ -1,4 +1,4 @@
-##JavaMelody for Spring Boot Example
+= JavaMelody for Spring Boot Example
 
 This example project demonstrates how to integrate JavaMelody in a Spring Boot web application using our starter package.
 
@@ -6,7 +6,7 @@ There are only two essential things to add to any basic Spring Boot project:
 
 Adding the dependency net.bull.javamelody:javamelody-spring-boot-starter to the POM of the application. See pom.xml.
 
-[source,xml]
+ [source,xml]
 ----
 <dependency>
 	<groupId>net.bull.javamelody</groupId>
@@ -25,8 +25,9 @@ If you want, you can configure other settings by using configuration properties 
 authentication parameters shoul added in following "javamelody.init-parameters.authorized-users"
 
 Example for application.properties:
-[source,java]
+ [source,java]
 ----
+/*
 javamelody.enabled=true
 javamelody.excluded-datasources=secretSource,topSecretSource
 javamelody.spring-monitoring-enabled=true
@@ -34,6 +35,8 @@ javamelody.init-parameters.log=true
 javamelody.init-parameters.url-exclude-pattern=(/webjars/.*|/css/.*|/images/.*|/fonts/.*|/js/.*)
 javamelody.init-parameters.authorized-users=ADMIN77fae508:77fae508-1d23-4864-8aae-dfa4bd060fec;ADMINb6683814:b6683814-74c0-46e9-8dc2-6f976cb3c2ce
 javamelody.init-parameters.monitoring-path=monitoring
+
+*/
 ----
 
 Then you can run your spring-boot application and open http://localhost:8080/monitoring to browse the monitoring reports.
@@ -41,14 +44,14 @@ by entering following credentials
 username : ADMIN77fae508
 password :77fae508-1d23-4864-8aae-dfa4bd060fec
 
-## Security
+ == Security
 
 To secure the access to the /monitoring URL, you may want to use the parameters allowed-addr-pattern to restrict access using a regexp for IP address or authorized-users for http basic auth as shown above in Configuration.
 
 Or you may want to use Spring security. For that:
 add the starter dependency in pom.xml:
 
-[source,xml]
+ [source,xml]
 ----
 
 	<dependency>
@@ -60,7 +63,7 @@ add the starter dependency in pom.xml:
 
    configure Spring security with .antMatchers("/monitoring").hasRole("ADMIN") (and http basic auth and in memory user's storage for example):
 
-[source,java]
+ [source,java]
 ----
 @Configuration
 @EnableWebSecurity
@@ -90,16 +93,16 @@ Perhaps you already use a management http port (e.g. 8081) different from the ap
 
     If not already done, configure the actuator and the management http port, in pom.xml:
 	
-[source,xml]
+ [source,xml]
 ----
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-actuator</artifactId>
 </dependency>
----
+----
 
 
-[source,java]
+ [source,java]
 ----
 and in application.yml (or in application.properties), for example on 8081:
 
